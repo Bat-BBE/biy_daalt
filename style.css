@@ -1,0 +1,328 @@
+body {
+    font-family: 'Mongolian Baiti', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('image.png');
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.game-container {
+    height: auto;
+    text-align: center;
+    background: linear-gradient(to right, rgba(255, 251, 243, 0.766), rgba(255, 237, 190, 0.777), rgba(255, 250, 238, 0.582));
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgb(238, 255, 0);
+    max-width: 1400px;
+    width: 90%;
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+.game-container:hover {
+    background: linear-gradient(to right, rgba(255, 241, 212, 0.766), rgba(255, 223, 144, 0.777), rgba(255, 233, 182, 0.582));
+    box-shadow: 0 8px 20px rgb(255, 0, 0);
+}
+
+h1 {
+    font-size: 36px;
+    color: #ddff00;
+    margin-bottom: 10px;
+    font-weight: 1000;
+    text-transform: uppercase;
+    transition: color 0.3s ease, font-size 0.3s ease;
+    text-shadow: 0 10px 20px rgb(255, 0, 0);
+}
+
+.rules {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-width: 350px;
+    margin-left: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(225, 255, 0, 0.2);
+    background-color: rgba(255, 240, 195, 0.8);
+}
+
+.rules button {
+    background: linear-gradient(to right, #ffea00, #FFCC00, #ffee33); 
+    color:  #18015e;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 25px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    text-shadow: 0 10px 20px rgba(255, 41, 41, 0.5);
+    transition: background-color 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.rules button:hover {
+    background: linear-gradient(to right, #FF9E00, #FF6A00, #FF9F30); 
+}
+
+#rules-content {
+    margin: 15px 0;
+    text-align: left;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.bet {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.betting {
+    margin: 20px;
+    text-align: left;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-left;
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #000000;
+    font-weight: bold;
+    transition: color 0.3s ease, font-size 0.3s ease;
+    text-shadow: 0 10px 20px rgb(229, 255, 0);
+}
+
+.betting label {
+    font-size: 16px;
+    margin-right: 15px;
+    color: #555;
+}
+
+.betting select, .betting input {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+    background-color: #d8d8d8;
+}
+
+.betting select:focus, .betting input:focus {
+    border-color: #ff9e00;
+    background-color: #fff;
+}
+
+.track {
+    position: relative;
+    width: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 60vh;
+    background: #47833b;
+    border-radius: 15px;
+    margin: 30px 0;
+    overflow: hidden;
+    border: 2px solid #3ea341;
+}
+
+.lane {
+    position: relative;
+    height: 90px;
+    margin: 10px 0;
+    background-color: #cba771;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.horse {
+    position: absolute;
+    left: 0;
+    transition: left 0.1s linear;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.horse img {
+    width: 90px;
+    height: auto;
+}
+
+.controls {
+    margin: 30px 0;
+}
+
+.controls button {
+    background-color: #28a745; 
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 15px 30px;
+    font-size: 1.3em;
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.controls button:hover {
+    background-color: #022089;
+    transform: scale(1.05);
+}
+
+#timer {
+    font-size: 20px;
+    color: #011eaf;
+    font-weight: bold;
+}
+
+#result {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #ff0000;
+}
+
+#restart-race {
+    display: inline-block;
+    background-color: #ff9f00;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 15px 30px;
+    font-size: 20px;
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#restart-race:hover {
+    background-color: #d32f2f;
+    transform: scale(1.05);
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: inline-block;
+}
+@media (max-width: 1200px) {
+    .game-container {
+        width: 85%;
+    }
+
+    .betting {
+        width: 350px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+
+    .game-container {
+        width: 95%;
+        margin: 10px 0;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .betting {
+        width: 80%;
+    }
+
+    .track {
+        height: 50vh;
+    }
+
+    .lane {
+        height: 70px;
+    }
+
+    .horse img {
+        width: 80px;
+    }
+
+    .controls button {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+
+    #restart-race, .controls button {
+        width: 100%;
+    }
+
+    #rules-content {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    .betting {
+        width: 100%;
+    }
+
+    .track {
+        height: 40vh;
+    }
+
+    .lane {
+        height: 60px;
+    }
+
+    .horse img {
+        width: 70px;
+    }
+
+    .controls button {
+        font-size: 0.9em;
+        padding: 10px 20px;
+    }
+
+    #restart-race, .controls button {
+        font-size: 1em;
+    }
+}
+
+
+
+
+
+
+

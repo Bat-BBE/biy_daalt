@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Морь Уралдуулах Тоглоом</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Морь уралдуулах тоглоом</h1>
+        <div class="rules">
+            <button id="show-rules">Дүрэм</button>
+            <div id="rules-content" class="hidden">
+                <h2>Тоглоомын Дүрэм</h2>
+                <ul>
+                    <li>Тоглогч сонгосон мориндоо бооцоо тавина.</li>
+                    <li>Уралдаан эхэлмэгц морьд санамсаргүй хурдтайгаар хөдөлнө.</li>
+                    <li>Таны сонгосон морь түрүүлбэл бооцооны хэмжээг 2 дахин хожно.</li>
+                    <li>Ялагдвал тавьсан бооцоогоо алддаг.</li>
+                </ul>
+                <button id="close-rules">Хаах</button>
+            </div>
+        </div>
+        <div class="bet">
+            <h2>Морь сонгох</h2>
+            <div class="betting">
+                <label for="selected-horse">Морь сонгоно уу:</label>
+                <select id="selected-horse">
+                    <option value="horse-1">Морь 1</option>
+                    <option value="horse-2">Морь 2</option>
+                    <option value="horse-3">Морь 3</option>
+                    <option value="horse-4">Морь 4</option>
+                </select><br>
+                <label for="bet-amount">Бооцоо тавих хэмжээ:</label>
+                <input type="number" id="bet-amount" placeholder="Төгрөг" min="1">
+            </div>
+        </div>
+        <div class="track">
+            <div class="lane" id="lane-1"><div class="horse" id="horse-1"><img src="horse-3.webp" alt="Морь 1"></div></div>
+            <div class="lane" id="lane-2"><div class="horse" id="horse-2"><img src="horse-4.jpg" alt="Морь 2"></div></div>
+            <div class="lane" id="lane-3"><div class="horse" id="horse-3"><img src="horse-5.webp" alt="Морь 3"></div></div>
+            <div class="lane" id="lane-4"><div class="horse" id="horse-4"><img src="horse-6.webp" alt="Морь 4"></div></div>
+        </div>
+
+        <div class="controls">
+            <button id="start-race">Уралдааныг Эхлүүлэх</button>
+            <button id="restart-race" class="hidden">Дахин Тоглох</button>
+            <div id="timer">Хугацаа: 0 секунд</div>
+        </div>
+        
+        <div id="result"></div>
+    </div>
+    <script>
+        const startButton = document.getElementById('start-race');
+        const restartButton = document.getElementById('restart-race');
+        const rulesButton = document.getElementById('show-rules');
+        const closeRulesButton = document.getElementById('close-rules');
+        const rulesContent = document.getElementById('rules-content');
+        const horses = [
+            document.getElementById('horse-1'),
+            document.getElementById('horse-2'),
+            document.getElementById('horse-3'),
+            document.getElementById('horse-4')
+        ];
+        const timerDisplay = document.getElementById('timer');
+        const resultDisplay = document.getElementById('result');
+        const selectedHorseInput = document.getElementById('selected-horse');
+        const betAmountInput = document.getElementById('bet-amount');
+
+        let raceInterval;
+        let time = 0;
+
+        startButton.addEventListener('click', startRace);
+        restartButton.addEventListener('click', restartGame);
+        rulesButton.addEventListener('click', () => rulesContent.classList.remove('hidden'));
+        closeRulesButton.addEventListener('click', () => rulesContent.classList.add('hidden'));
+
+        function startRace() {
+            const selectedHorse = selectedHorseInput.value;
+            let betAmount = parseFloat(betAmountInput.value);
+
+            if (isNaN(betAmount) || betAmount < 1) {
+                alert("Та морь сонгох ба бооцоо тавих шаардлагатай!");
+                return; 
+            }
+
+            resultDisplay.textContent = '';
+            time = 0;
+            updateTimer();
+
+            horses.forEach(horse => {
+                horse.style.left = '0px';
+            });
+
+            raceInterval = setInterval(() => moveHorses(selectedHorse, betAmount), 100);
+            startButton.disabled = true;
+        }
+
+        function moveHorses(selectedHorse, betAmount) {
+            let raceComplete = false;
+            let winner = null;
+
+            horses.forEach(horse => {
+                let currentPosition = parseInt(horse.style.left || 0);
+                let lane = horse.parentElement;
+                let raceWidth = lane.offsetWidth;
+                let moveDistance = Math.random() * 10;
+
+                horse.style.left = `${currentPosition + moveDistance}px`;
+
+                if (currentPosition + moveDistance >= raceWidth) {
+                    raceComplete = true;
+                    winner = horse.id;
+                }
+            });
+
+            if (raceComplete) {
+                clearInterval(raceInterval);
+                declareResult(winner, selectedHorse, betAmount);
+                restartButton.classList.remove('hidden');
+            } else {
+                time++;
+                updateTimer();
+            }
+        }
+
+        function updateTimer() {
+            timerDisplay.textContent = `Хугацаа: ${time} секунд`;
+        }
+
+        function declareResult(winner, selectedHorse, betAmount) {
+            const winnerName = document.querySelector(`#${winner} img`).alt;
+
+            if (winner === selectedHorse) {
+                const prize = betAmount * 2;
+                resultDisplay.innerHTML = `
+                    <p>Түрүүлсэн: ${winnerName}!</p>
+                    <p>Таны сонгосон морь түрүүллээ! Та ${prize} төгрөг хожлоо!</p>
+                `;
+            } else {
+                resultDisplay.innerHTML = `
+                    <p>Түрүүлсэн: ${winnerName}!</p>
+                    <p>Таны сонгосон морь түрүүлж чадсангүй. Та ${betAmount} төгрөг алдлаа!</p>
+                `;
+            }
+        }
+
+        function restartGame() {
+            restartButton.classList.add('hidden');
+            startButton.disabled = false;
+            resultDisplay.textContent = '';
+            horses.forEach(horse => horse.style.left = '0px');
+            betAmountInput.value = '';
+            selectedHorseInput.value = 'horse-1';
+            time = 0;
+            updateTimer();
+            startButton.disabled = false;
+        }
+    </script>
+</body>
+</html>
+
+
+
